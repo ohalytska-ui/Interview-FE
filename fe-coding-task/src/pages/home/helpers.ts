@@ -1,4 +1,4 @@
-import { DEBOUNCE_DELAY } from 'utils/constants';
+import { DEBOUNCE_DELAY } from './constants';
 
 export const generateQuarterRange = (quarterStart: string, quarterEnd: string) => {
   const quarters: string[] = [];

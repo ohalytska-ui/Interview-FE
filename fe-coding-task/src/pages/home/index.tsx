@@ -19,10 +19,10 @@ import { getStatisticsQueryData, options } from './mocks';
 import { useSearchParams } from 'react-router-dom';
 import { generateQuarterRange } from './helpers';
 import { LoadingButton } from '@mui/lab';
-import { rangeRegexPattern } from 'utils/regex';
 import { StatisticsBarChart } from 'components/statistics-bar-chart';
 import { Snackbar } from 'components/snackbar';
-import { MAX_FORM_DATA_SIZE } from 'utils/constants';
+import { rangeRegexPattern } from './regex';
+import { MAX_FORM_DATA_SIZE } from './constants';
 
 const URL = 'https://data.ssb.no/api/v0/no/table/07241';
 
