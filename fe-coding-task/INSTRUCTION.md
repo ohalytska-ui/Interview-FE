@@ -11,8 +11,7 @@ visit.
 
 UI should somehow limit users from providing quarter values earlier than 2009K1.
 
-
-We would like you also to add the possibility to save statistics for further use with the possibility to add and edit single comment for the presented statistics. The comment may be stored in Local Storage, so it can be later used when viewing the statistics. 
+We would like you also to add the possibility to save statistics for further use with the possibility to add and edit single comment for the presented statistics. The comment may be stored in Local Storage, so it can be later used when viewing the statistics.
 
 ### For example
 
@@ -20,7 +19,7 @@ We would like you also to add the possibility to save statistics for further use
 - house type: Småhus
 
 | Type of property | API value |
-|:-----------------|:---------:|
+| :--------------- | :-------: |
 | Boliger i alt    |   '00'    |
 | Småhus           |   '02'    |
 | Blokkleiligheter |   '03'    |
@@ -75,9 +74,12 @@ curl -X POST --location "https://data.ssb.no/api/v0/no/table/07241" \
 ```
 
 ## Libraries
+
 We would like you to use some additional libraries for this task (included in package.json)
+
 - material-ui
 - react-hook-form
 
 ## Type-script
+
 Please don't forget about typings!
