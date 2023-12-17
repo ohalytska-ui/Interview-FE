@@ -14,7 +14,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { FormInput, FormInputs, StatisticsFormDataType, PrevFormDataType } from './types';
+import { FormInput, FormInputs, StatisticsFormDataType, PrevFormDataType, Dataset } from './types';
 import { getStatisticsQueryData, options } from './mocks';
 import { useSearchParams } from 'react-router-dom';
 import { generateQuarterRange } from './helpers';
@@ -23,7 +23,6 @@ import { rangeRegexPattern } from 'utils/regex';
 import { StatisticsBarChart } from 'components/statistics-bar-chart';
 import { Snackbar } from 'components/snackbar';
 import { MAX_FORM_DATA_SIZE } from 'utils/constants';
-import { Dataset } from 'models/interfaces';
 
 const URL = 'https://data.ssb.no/api/v0/no/table/07241';
 
