@@ -1,3 +1,6 @@
+/* Comment: do not see good error handling through all file, no error handling in async operations */
+/* Comment: added if/else brackets to code readability */
+/* Comment:  */
 app.post('/api/extract', upload.single('file'), async (req, res) => {
     logInfo('POST /api/extract',req.body);
     logInfo('FILE=',req.file);
@@ -10,12 +13,12 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
         const idUser = req.body.userID;
         const user = await User.findOne(idUser);
 
+        /* Comment: if user is exist do not need to check userID, or need to be moved user declaration inside if */
         if (requestID && project && idUser && user) {
             /* Comment: requested changes: logDebug(`User with role ${user.role}`, user); */
             logDebug('User with role '+user.role, user);
-            /* Comment: if brackets */
             if (user.role === 'ADVISOR' || user.role.indexOf('ADVISOR') > -1)
-                /* Comment: not sure why we use DONE here, it not consistent with other code statuses */
+                /* Comment: not sure why we use DONE here, it is not consistent with other code statuses */
                 return res.json({requestID, step: 999, status: 'DONE', message: 'Nothing to do for ADVISOR role'});
 
             /* Comment: single-line comment for code consistency */
@@ -29,7 +32,6 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
                 const fileHash = idUser;
                 const fileName = 'fullmakt';
                 const fileType = mime.getExtension(file.mimetype);
-                /* Comment: if brackets */
                 if (fileType !== 'pdf')
                     return res.status(500).json({requestID, message: 'Missing pdf file'}); /* Comment: requested changes: File has incorrect type/ File is not pdf */
                 await db.updateStatus(requestID, 3, '');
@@ -48,7 +50,6 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
                 let sent = true;
                 const debtCollectors = await db.getDebtCollectors();
                 logDebug('debtCollectors=', debtCollectors);
-                /* Comment: if brackets */
                 if (!debtCollectors)
                     return res.status(500).json({requestID, message: 'Failed to get debt collectors'});
 
@@ -59,6 +60,7 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
                 }
 
                 const sentStatus = {};
+                /* Comment: adding time-consuming operations to a loop is a very bad idea, if we have a lot of debtCollectors request will be just crushed  */
                 for (let i = 0; i < debtCollectors.length ; i++) {
                     /* Comment: requested changes: i+10 */
                     await db.updateStatus(requestID, 10+i, '');
@@ -76,7 +78,7 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
                     const requestKey = hashSum.digest('hex');
                     logDebug('REQUEST KEY:', requestKey);
 
-                    /* Comment: add semicolon */
+                    /* Comment: add semicolon and 'utf-8' can be removed - it is default value */
                     const hash = Buffer.from(`${idUser}__${idCollector}`, 'utf8').toString('base64')
 
                     /* Comment: suggestion for more readable code, move await in a separate variable */
@@ -115,7 +117,6 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
                         // update DB with result
                         await db.setUserCollectorRequestKeyRes(requestKey, idUser, idCollector, resp);
 
-                        /* Comment: if brackets */
                         if (!sentStatus[collectorName])
                             sentStatus[collectorName] = {};
                         sentStatus[collectorName][collectorEmail] = resp;
@@ -137,6 +138,7 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
 
                 await db.updateStatus(requestID, 500, '');
 
+                /* Comment: single-line comment for code consistency */
                 /* prepare summary email */
                 const summaryConfig = {
                     /* Comment: remove or add explanation why this area is commented */
@@ -166,7 +168,7 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
             /* Comment: not sure why we use DONE here, it not consistent with other code statuses */
             return res.json({requestID, step: 999, status: 'DONE', message: 'Done sending emails...'});
         } else
-            /* Comment: else brackets, we do not check here if the file is missing */
+            /* Comment: we do not check here if the file is missing */
             return res.status(500).json({requestID, message: 'Missing requried input (requestID, project, file)'});
     }
     res.status(500).json({requestID: '', message: 'Missing requried input (form data)'});
