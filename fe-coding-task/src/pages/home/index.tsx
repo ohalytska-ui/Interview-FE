@@ -25,6 +25,8 @@ import { Snackbar } from 'components/snackbar';
 import { MAX_FORM_DATA_SIZE } from 'utils/constants';
 import { Dataset } from 'models/interfaces';
 
+const URL = 'https://data.ssb.no/api/v0/no/table/07241';
+
 export const Home: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
@@ -107,7 +109,7 @@ export const Home: FC = () => {
     setLoading(true);
     const { houseType, quarterStart, quarterEnd } = formData;
     if (houseType && quarterStart && quarterEnd) {
-      const response = await fetch('https://data.ssb.no/api/v0/no/table/07241', {
+      const response = await fetch(URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: getStatisticsQueryData(houseType, generateQuarterRange(quarterStart, quarterEnd)),
@@ -143,6 +145,7 @@ export const Home: FC = () => {
     }
   }, [setValue, searchParams]);
 
+  // Small improvement: I added a little bit of imagination and stored not just the previous value of formData but 5 previous ones, so the user can restore more values
   useEffect(() => {
     const storedFormData: StatisticsFormDataType[] = JSON.parse(localStorage.getItem('statisticsFormData') || '[]');
     const transformedOptions = storedFormData.map(({ timestamp, data }) => ({

@@ -1,6 +1,6 @@
 /* Comment: do not see good error handling through all file, no error handling in async operations */
 /* Comment: added if/else brackets to code readability */
-/* Comment:  */
+/* Comment: not sure if logDebug and logInfo print all the necessary info about the file where it happened and what problem had occurred and should be removed if this is debugging info*/
 app.post('/api/extract', upload.single('file'), async (req, res) => {
     logInfo('POST /api/extract',req.body);
     logInfo('FILE=',req.file);
@@ -120,7 +120,7 @@ app.post('/api/extract', upload.single('file'), async (req, res) => {
                         if (!sentStatus[collectorName])
                             sentStatus[collectorName] = {};
                         sentStatus[collectorName][collectorEmail] = resp;
-                        /* Comment: check is there is response before we assign it, on the 115 line */
+                        /* Comment: check is there is response before we assign it, on the 118 line */
 
                         if (!resp) {
                             logError('extract() Sending email failed: ', resp);
