@@ -216,7 +216,7 @@ export const Home: FC = () => {
                   label="Quarter End"
                 />
               </FormControl>
-              {prevStatisticsFormData ? (
+              {prevStatisticsFormData.length ? (
                 <FormControl fullWidth>
                   <InputLabel id="previous-data-label">Previous saved data</InputLabel>
                   <Select

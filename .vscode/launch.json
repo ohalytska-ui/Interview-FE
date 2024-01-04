@@ -16,9 +16,7 @@
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
-            "protocol": "inspector",
             "internalConsoleOptions": "neverOpen",
-            "disableOptimisticBPs": true
         },
         {
             "type": "chrome",
